@@ -478,9 +478,9 @@ ggarrange(
   ncol = 2)
 
 
-# |==========================================================================================================|
-# |      YEARLY 75TH PERCENTILE AVERAGE DAILY FLOW, BASED ON OBEDZINSKI ET AL. (2018): DURING EMERGENCE      |
-# |==========================================================================================================|
+# |===============================================================================================|
+# |      YEARLY 75TH PERCENTILE OF FLOW, BASED ON OBEDZINSKI ET AL. (2018): DURING EMERGENCE      |
+# |===============================================================================================|
 
 qt75_em_sj <- disch_sj %>%
   dplyr::filter(doy >= unique(em_period$start_doy), doy <= unique(em_period$end_doy)) %>%
@@ -504,9 +504,9 @@ ggarrange(
   ncol = 1)
 
 
-# |=======================================================================================================|
-# |      YEARLY 75TH PERCENTILE AVERAGE DAILY FLOW, BASED ON OBEDZINSKI ET AL. (2018): DURING GROWTH      |
-# |=======================================================================================================|
+# |============================================================================================|
+# |      YEARLY 75TH PERCENTILE OF FLOW, BASED ON OBEDZINSKI ET AL. (2018): DURING GROWTH      |
+# |============================================================================================|
 
 weighted_co_disch_75qt <- function(smolt_data, discharge_data, periods){
   # Calculate average/median discharge during the desired period, as well as variance
