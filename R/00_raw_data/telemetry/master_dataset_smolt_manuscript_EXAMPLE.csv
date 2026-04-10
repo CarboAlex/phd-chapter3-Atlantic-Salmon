@@ -1,0 +1,55 @@
+serialno_tag;Date_Hit;Location;river;Latitude;Longitude;deploy_year;SerialNo_Rec;Station_Name;fl_mm
+9000001;2021-06-12;strait_of_belle_isle;Saint Jean River;51.5012;-56.8234;2021;109001;SOBI_North_01;124
+9000001;2021-06-13;strait_of_belle_isle;Saint Jean River;51.5012;-56.8234;2021;109001;SOBI_North_01;124
+9000001;2021-06-21;southern_labrador;Saint Jean River;52.1843;-55.6012;2021;109002;SLAB_01;124
+9000002;2021-06-10;gulf_of_st_lawrence_1;Saint Jean River;50.7234;-57.1456;2021;109003;GULF_STL_01;118
+9000002;2021-06-11;gulf_of_st_lawrence_1;Saint Jean River;50.7234;-57.1456;2021;109003;GULF_STL_01;118
+9000002;2021-06-14;strait_of_belle_isle;Saint Jean River;51.4987;-56.7891;2021;109001;SOBI_North_01;118
+9000002;2021-06-23;southern_labrador;Saint Jean River;52.2341;-55.5678;2021;109002;SLAB_01;118
+9000003;2021-06-08;gulf_of_st_lawrence_1;Saint Jean River;50.7234;-57.1456;2021;109003;GULF_STL_01;131
+9000003;2021-06-16;strait_of_belle_isle;Saint Jean River;51.5012;-56.8234;2021;109001;SOBI_North_01;131
+9000003;2021-06-25;newfoundland_1;Saint Jean River;51.8923;-55.8901;2021;109004;NFL_01;131
+9000004;2021-06-11;strait_of_belle_isle;Cascapedia River;51.4867;-56.7543;2021;109001;SOBI_North_01;127
+9000004;2021-06-19;southern_labrador;Cascapedia River;52.0912;-55.4321;2021;109002;SLAB_01;127
+9000005;2021-06-09;gulf_of_st_lawrence_1;Cascapedia River;50.6987;-57.0234;2021;109003;GULF_STL_01;122
+9000005;2021-06-13;strait_of_belle_isle;Cascapedia River;51.5234;-56.8012;2021;109001;SOBI_North_01;122
+9000005;2021-06-22;st_anthony;Cascapedia River;51.3789;-55.6789;2021;109005;STAN_01;122
+9000006;2021-06-14;strait_of_belle_isle;Restigouche River;51.5123;-56.8345;2021;109001;SOBI_North_01;135
+9000006;2021-06-14;strait_of_belle_isle;Restigouche River;51.5123;-56.8345;2021;109001;SOBI_North_01;135
+9000006;2021-06-24;southern_labrador;Restigouche River;52.2012;-55.5234;2021;109002;SLAB_01;135
+9000007;2021-06-07;gulf_of_st_lawrence_1;Restigouche River;50.7123;-57.1234;2021;109003;GULF_STL_01;119
+9000007;2021-06-15;strait_of_belle_isle;Restigouche River;51.4923;-56.7678;2021;109001;SOBI_North_01;119
+9000007;2021-06-26;newfoundland_1;Restigouche River;51.9012;-55.9012;2021;109004;NFL_01;119
+9000008;2021-06-13;strait_of_belle_isle;Restigouche River;51.5056;-56.8123;2021;109001;SOBI_North_01;128
+9000008;2021-06-21;st_anthony;Restigouche River;51.3678;-55.6901;2021;109005;STAN_01;128
+9000009;2022-06-10;strait_of_belle_isle;Trinite River;51.4934;-56.7923;2022;109001;SOBI_North_01;115
+9000009;2022-06-11;strait_of_belle_isle;Trinite River;51.4934;-56.7923;2022;109001;SOBI_North_01;115
+9000009;2022-06-20;southern_labrador;Trinite River;52.1567;-55.5901;2022;109002;SLAB_01;115
+9000010;2022-06-08;gulf_of_st_lawrence_1;Trinite River;50.6834;-57.0456;2022;109003;GULF_STL_01;121
+9000010;2022-06-12;strait_of_belle_isle;Trinite River;51.5089;-56.8056;2022;109001;SOBI_North_01;121
+9000010;2022-06-22;newfoundland_1;Trinite River;51.8756;-55.8678;2022;109004;NFL_01;121
+9000011;2022-06-11;strait_of_belle_isle;Trinite River;51.5167;-56.8289;2022;109001;SOBI_North_01;117
+9000011;2022-06-19;southern_labrador;Trinite River;52.1234;-55.4789;2022;109002;SLAB_01;117
+9000012;2022-06-09;gulf_of_st_lawrence_1;Trinite River;50.7056;-57.1123;2022;109003;GULF_STL_01;126
+9000012;2022-06-14;strait_of_belle_isle;Trinite River;51.5012;-56.8012;2022;109001;SOBI_North_01;126
+9000012;2022-06-24;st_anthony;Trinite River;51.3901;-55.7012;2022;109005;STAN_01;126
+9000013;2022-06-12;strait_of_belle_isle;Saguenay River;51.4867;-56.7678;2022;109001;SOBI_North_01;130
+9000013;2022-06-21;southern_labrador;Saguenay River;52.0789;-55.4567;2022;109002;SLAB_01;130
+9000014;2022-06-07;gulf_of_st_lawrence_1;Saguenay River;50.6912;-57.0678;2022;109003;GULF_STL_01;123
+9000014;2022-06-13;strait_of_belle_isle;Saguenay River;51.5234;-56.8178;2022;109001;SOBI_North_01;123
+9000014;2022-06-23;newfoundland_1;Saguenay River;51.9234;-55.8456;2022;109004;NFL_01;123
+9000015;2022-06-10;strait_of_belle_isle;Saguenay River;51.5056;-56.8234;2022;109001;SOBI_North_01;129
+9000015;2022-06-18;st_anthony;Saguenay River;51.3567;-55.6678;2022;109005;STAN_01;129
+9000016;2021-06-15;strait_of_belle_isle;Saint Jean River;51.4978;-56.8012;2021;109001;SOBI_North_01;120
+9000016;2021-06-24;southern_labrador;Saint Jean River;52.1789;-55.5456;2021;109002;SLAB_01;120
+9000017;2022-06-13;strait_of_belle_isle;Trinite River;51.5123;-56.8123;2022;109001;SOBI_North_01;113
+9000017;2022-06-22;newfoundland_1;Trinite River;51.8901;-55.8234;2022;109004;NFL_01;113
+9000018;2021-06-06;gulf_of_st_lawrence_1;Restigouche River;50.7012;-57.1345;2021;109003;GULF_STL_01;133
+9000018;2021-06-17;strait_of_belle_isle;Restigouche River;51.5189;-56.8289;2021;109001;SOBI_North_01;133
+9000018;2021-06-28;southern_labrador;Restigouche River;52.2234;-55.5012;2021;109002;SLAB_01;133
+9000019;2022-06-06;gulf_of_st_lawrence_1;Saguenay River;50.6756;-57.0901;2022;109003;GULF_STL_01;125
+9000019;2022-06-11;strait_of_belle_isle;Saguenay River;51.4912;-56.7834;2022;109001;SOBI_North_01;125
+9000019;2022-06-20;st_anthony;Saguenay River;51.3456;-55.6456;2022;109005;STAN_01;125
+9000020;2021-06-09;gulf_of_st_lawrence_1;Cascapedia River;50.7189;-57.1012;2021;109003;GULF_STL_01;116
+9000020;2021-06-18;strait_of_belle_isle;Cascapedia River;51.5078;-56.8167;2021;109001;SOBI_North_01;116
+9000020;2021-06-27;southern_labrador;Cascapedia River;52.1456;-55.5123;2021;109002;SLAB_01;116

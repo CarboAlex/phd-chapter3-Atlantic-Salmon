@@ -1,8 +1,12 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# R STANDARD ARTIFACTS
+# ══════════════════════════════════════════════════════════════════════════════
+
 # History files
 .Rhistory
 .Rapp.history
 
-# Session Data files
+# Session data files
 .RData
 .RDataTmp
 
@@ -21,11 +25,11 @@
 # RStudio files
 .Rproj.user/
 
-# produced vignettes
+# Produced vignettes
 vignettes/*.html
 vignettes/*.pdf
 
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+# OAuth2 token
 .httr-oauth
 
 # knitr and R markdown default cache directories
@@ -42,8 +46,58 @@ vignettes/*.pdf
 # pkgdown site
 docs/
 
-# translation temp files
+# Translation temp files
 po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CONFIDENTIAL RAW DATA
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Telemetry data (Lilly et al., unpublished)
+R/00_raw_data/telemetry/*.csv
+
+# Always publish example files regardless of the rules above
+!R/00_raw_data/**/*_EXAMPLE.csv
+!R/00_raw_data/**/*_EXAMPLE.xlsx
+
+# ══════════════════════════════════════════════════════════════════════════════
+# LARGE GEOSPATIAL FILES
+# ══════════════════════════════════════════════════════════════════════════════
+*.nc
+*.tif
+*.tiff
+*.gdb/
+*.shp
+*.dbf
+*.shx
+*.prj
+*.sbn
+*.sbx
+*.cpg
+
+# ══════════════════════════════════════════════════════════════════════════════
+# R BINARY DATA FORMATS
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Ignore all .fst and .rds by default
+*.fst
+*.RDS
+*.rds
+
+# Exception: derived datasets shared for reproducibility
+!data/derived/*.fst
+
+# ══════════════════════════════════════════════════════════════════════════════
+# INTERMEDIATE DATA (regenerable by running the scripts)
+# ══════════════════════════════════════════════════════════════════════════════
+data/intermediate/
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SYSTEM FILES
+# ══════════════════════════════════════════════════════════════════════════════
+.DS_Store
+Thumbs.db
+desktop.ini
