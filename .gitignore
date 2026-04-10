@@ -63,6 +63,14 @@ R/00_raw_data/telemetry/*.csv
 !R/00_raw_data/**/*_EXAMPLE.csv
 !R/00_raw_data/**/*_EXAMPLE.xlsx
 
+# Derived datasets — ignored by default (generated from confidential raw data)
+R/00_derived_data/*.fst
+R/00_derived_data/*.csv
+
+# Exception: example versions are always published
+!R/00_derived_data/*_EXAMPLE.fst
+!R/00_derived_data/*_EXAMPLE.csv
+
 # ══════════════════════════════════════════════════════════════════════════════
 # LARGE GEOSPATIAL FILES
 # ══════════════════════════════════════════════════════════════════════════════
