@@ -785,3 +785,6 @@ all_dates_migration <- merge(all_dates_smolt, all_dates_sea, by = c("river", "co
 
 # Export final migration date table
 write_fst(all_dates_migration, path = "R/00_derived_data/Year_Migration_Dates_River_Sea.fst")
+
+
+
