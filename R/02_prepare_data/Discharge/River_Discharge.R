@@ -564,7 +564,7 @@ qt75_em_stj <- disch_stj %>%
                 doy <= unique(em_period$end_doy)) %>%
   dplyr::group_by(year) %>%
   dplyr::summarise(
-    em_quant_75 = as.numeric(quantile(simulated_discharge_m3s, 0.75))) %>%
+    em_quant_75qt_disc = as.numeric(quantile(simulated_discharge_m3s, 0.75))) %>%
   dplyr::rename(cohort = year)
 
 qt75_em_tri <- disch_tri %>%
@@ -572,13 +572,13 @@ qt75_em_tri <- disch_tri %>%
                 doy <= unique(em_period$end_doy)) %>%
   dplyr::group_by(year) %>%
   dplyr::summarise(
-    em_quant_75 = as.numeric(quantile(simulated_discharge_m3s, 0.75))) %>%
+    em_quant_75qt_disc = as.numeric(quantile(simulated_discharge_m3s, 0.75))) %>%
   dplyr::rename(cohort = year)
 
 ggarrange(
-  ggplot(data = qt75_em_stj, aes(x = cohort, y = em_quant_75)) +
+  ggplot(data = qt75_em_stj, aes(x = cohort, y = em_quant_75qt_disc)) +
     geom_line() + labs(title = "St. Jean"),
-  ggplot(data = qt75_em_tri, aes(x = cohort, y = em_quant_75)) +
+  ggplot(data = qt75_em_tri, aes(x = cohort, y = em_quant_75qt_disc)) +
     geom_line() + labs(title = "Trinite"),
   ncol = 1)
 

@@ -964,13 +964,11 @@ pgti_co_year_tri <- weighted_co_pgti(
 
 sj_all <- Reduce(function(x, y) merge(x, y, by = "cohort", all = TRUE),
                  list(weighted_co_season_sj, emergence_sj, gr_combined_stj,
-                      em_combined_stj, pgti_em_stj, pgti_co_year_stj,
-                      weighted_co_warm_sj))
+                      em_combined_stj, pgti_em_stj, pgti_co_year_stj))
 
 tr_all <- Reduce(function(x, y) merge(x, y, by = "cohort", all = TRUE),
                  list(weighted_co_season_tr, emergence_tr, gr_combined_tri,
-                      em_combined_tri, pgti_em_tri, pgti_co_year_tri,
-                      weighted_co_warm_tr))
+                      em_combined_tri, pgti_em_tri, pgti_co_year_tri))
 
 sj_all$river <- "stj"
 tr_all$river <- "tri"

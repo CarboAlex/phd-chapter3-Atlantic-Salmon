@@ -1,3 +1,8 @@
+
+# Temporary
+R/04_analysis/River/03_River_Modeling.R
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # R STANDARD ARTIFACTS
 # ══════════════════════════════════════════════════════════════════════════════
@@ -69,6 +74,10 @@ R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024
 # Always publish example files regardless of the rules above
 !R/00_raw_data/**/*_EXAMPLE.csv
 !R/00_raw_data/**/*_EXAMPLE.xlsx
+
+# Clean datasets — ignored by default until publication (generated from confidential raw data)
+R/03_clean_data/
+R/04_analysis/**/*.fst
 
 # Derived datasets — ignored by default (generated from confidential raw data)
 R/00_derived_data/*.fst
