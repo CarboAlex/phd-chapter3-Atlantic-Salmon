@@ -87,6 +87,15 @@ R/00_derived_data/*.csv
 !R/00_derived_data/*_EXAMPLE.fst
 !R/00_derived_data/*_EXAMPLE.csv
 
+
+# ══════════════════════════════════════════════════════════════════════════════
+# TEST SCRIPTS
+# ══════════════════════════════════════════════════════════════════════════════
+
+R/04_analysis/River/04_Compare_Dredge_vs_Hypothesis_Method.R
+R/04_analysis/River/stj_boot.rds
+R/04_analysis/River/tri_boot.rds
+
 # ══════════════════════════════════════════════════════════════════════════════
 # LARGE GEOSPATIAL FILES
 # ══════════════════════════════════════════════════════════════════════════════

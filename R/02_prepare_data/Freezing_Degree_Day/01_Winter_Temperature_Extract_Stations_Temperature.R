@@ -230,6 +230,67 @@ ggarrange(
 )
 
 
+
+# ── Exploring missing data ────────────────────────────────────
+
+summarize_coverage_v2 <- function(avail_dt, site_name) {
+  date_range <- seq(min(avail_dt$LOCAL_DATE), max(avail_dt$LOCAL_DATE), by = "day")
+  total_days <- length(date_range)
+  
+  # Couverture par station individuelle
+  per_station <- avail_dt[, .(
+    covered_days = sum(AVAILABLE == 1),
+    first_year = year(min(LOCAL_DATE)),
+    last_year  = year(max(LOCAL_DATE))
+  ), by = STATION_NAME]
+  
+  per_station[, coverage_pct := round(covered_days / total_days * 100, 1)]
+  per_station[, n_years      := last_year - first_year + 1]
+  
+  data.table(
+    Site                  = site_name,
+    Periode               = paste(min(per_station$first_year), max(per_station$last_year), sep = "–"),
+    N_stations            = nrow(per_station),
+    Couverture_moy_pct    = round(mean(per_station$coverage_pct), 1),
+    Couverture_sd_pct     = round(sd(per_station$coverage_pct), 1),
+    Duree_moy_ans         = round(mean(per_station$n_years), 1),
+    Duree_sd_ans          = round(sd(per_station$n_years), 1)
+  )
+}
+
+rbind(
+  summarize_coverage_v2(avail_stj %>% 
+                          dplyr::filter(LOCAL_DATE >= "1980-01-01"), 
+                        "St-Jean"),
+  summarize_coverage_v2(avail_tri %>% 
+                          dplyr::filter(LOCAL_DATE >= "1980-01-01"),
+                        "Trinite")
+)
+
+
+check_combined_coverage <- function(avail_dt, site_name, start_year = 1980) {
+  
+  avail_dt <- avail_dt[year(LOCAL_DATE) >= start_year]
+  date_range <- seq(as.IDate(paste0(start_year, "-01-01")), 
+                    max(avail_dt$LOCAL_DATE), by = "day")
+  total_days <- length(date_range)
+  
+  covered <- avail_dt[AVAILABLE == 1, .(n_stations = .N), by = LOCAL_DATE]
+  
+  covered_days    <- nrow(covered)
+  missing_days    <- total_days - covered_days
+  single_days     <- covered[n_stations == 1, .N]
+  
+  cat(site_name, ":\n")
+  cat("  Couverture totale       :", round(covered_days / total_days * 100, 1), "%\n")
+  cat("  Jours non disponibles   :", missing_days, "\n")
+  cat("  Jours 1 seule station   :", round(single_days / covered_days * 100, 1), "% des jours couverts\n")
+}
+
+check_combined_coverage(avail_stj, "St-Jean")
+check_combined_coverage(avail_tri, "Trinite")
+
+
 # ── Inter-station temperature correlations ────────────────────────────────────
 
 # Reshape to wide format for pairwise correlation plotting
