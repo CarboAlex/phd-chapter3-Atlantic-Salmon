@@ -363,6 +363,11 @@ range_stj <- yearly_growth_period(temp_stj, temp_threshold = temp_threshold, k_v
 range_tri <- yearly_growth_period(temp_tri, temp_threshold = temp_threshold, k_value = 30)
 
 
+range(range_stj$dev_expl)
+range(range_tri$dev_expl)
+
+
+
 # ── Summary of growth periods and quality of GAMs ────────────────────
 
 summary_stj <- range_stj %>%
@@ -400,8 +405,6 @@ write_fst(x    = range_tri,
           path = file.path(base_path,
                            "R/01_derived_data",
                            "Growth_Periods_Trinite.fst"))
-
-
 
 
 

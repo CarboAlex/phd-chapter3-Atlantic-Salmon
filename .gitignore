@@ -96,6 +96,8 @@ R/04_analysis/River/04_Compare_Dredge_vs_Hypothesis_Method.R
 R/04_analysis/River/stj_boot.rds
 R/04_analysis/River/tri_boot.rds
 
+R/04_analysis/River/05_Heteroscedasticity_STJ.R
+
 # ══════════════════════════════════════════════════════════════════════════════
 # RESULTS NOT NECESSARY TO SHOW (WILL LIKELY BE PRESENTED IN THE PAPER)
 # ══════════════════════════════════════════════════════════════════════════════

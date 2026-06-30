@@ -267,12 +267,17 @@ rbind(
                         "Trinite")
 )
 
-
-check_combined_coverage <- function(avail_dt, site_name, start_year = 1980) {
+check_combined_coverage <- function(avail_dt, site_name, start_year = 1980, months = NULL) {
   
   avail_dt <- avail_dt[year(LOCAL_DATE) >= start_year]
   date_range <- seq(as.IDate(paste0(start_year, "-01-01")), 
                     max(avail_dt$LOCAL_DATE), by = "day")
+  
+  if (!is.null(months)) {
+    avail_dt  <- avail_dt[month(LOCAL_DATE) %in% months]
+    date_range <- date_range[month(date_range) %in% months]
+  }
+  
   total_days <- length(date_range)
   
   covered <- avail_dt[AVAILABLE == 1, .(n_stations = .N), by = LOCAL_DATE]
@@ -287,8 +292,8 @@ check_combined_coverage <- function(avail_dt, site_name, start_year = 1980) {
   cat("  Jours 1 seule station   :", round(single_days / covered_days * 100, 1), "% des jours couverts\n")
 }
 
-check_combined_coverage(avail_stj, "St-Jean")
-check_combined_coverage(avail_tri, "Trinite")
+check_combined_coverage(avail_stj, "St-Jean",  months = c(10, 11, 12, 1, 2))
+check_combined_coverage(avail_tri, "Trinite",  months = c(10, 11, 12, 1, 2))
 
 
 # ── Inter-station temperature correlations ────────────────────────────────────
@@ -388,4 +393,19 @@ write_fst(tri_temp_summary,
 
 write_fst(stj_temp_summary,
           file.path(out_path, "sj_air_temp_daily_mean_stations.fst"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

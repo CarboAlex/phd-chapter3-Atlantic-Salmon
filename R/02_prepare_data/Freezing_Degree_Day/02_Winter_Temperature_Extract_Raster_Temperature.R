@@ -110,6 +110,25 @@ on.exit({
 }, add = TRUE)
 
 
+# Get area of each raster
+raster_area_km2 <- function(r, name = deparse(substitute(r))) {
+  ext <- ext(r)
+  
+  # Largeur en km (latitude moyenne pour correction cosinus)
+  lat_mean <- (ext$ymin + ext$ymax) / 2
+  width_km  <- (ext$xmax - ext$xmin) * 111.32 * cos(lat_mean * pi / 180)
+  height_km <- (ext$ymax - ext$ymin) * 110.574
+  
+  area_km2 <- width_km * height_km
+  cat(sprintf("%s : %.2f km²\n", name, area_km2))
+  return(invisible(area_km2))
+}
+
+raster_area_km2(tri_1975_2008)
+raster_area_km2(tri_2009_2025)
+raster_area_km2(stj_1978_2024)
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # SECTION 5: CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
@@ -250,4 +269,26 @@ write_fst(tri_daily_mean,
 
 write_fst(stj_daily_mean,
           file.path(out_path, "sj_air_temp_daily_mean_rasters.fst"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

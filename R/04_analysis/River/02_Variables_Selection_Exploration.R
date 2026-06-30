@@ -35,6 +35,7 @@ library(ggplot2)
 library(ggpubr)
 library(lmtest)
 library(tibble)
+library(betareg)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -163,6 +164,7 @@ plot_cor <- function(data, title_ = "") {
           plot.title        = element_text(hjust = 0.5)) +
     coord_fixed()
 }
+
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -596,24 +598,26 @@ ggarrange(
 
 par(mfrow = c(1, 1))
 
-stj_ind <- glm(
+stj_ind <- betareg(
   surv_egg_smolt ~ cohort +
     co_gr_median_temp + co_gr_var_temp +
     em_median_temp + em_var_temp + em_dd_u_16_temp +
     co_year_mean_sum_ptgi + em_quant_75qt_disc +
     co_fdd_bimon_ja_fe + co_mean_forest,
-  data = stj_clean, family = gaussian()
+  data = stj_clean, 
+  link = "logit"
 )
 acf(residuals(stj_ind))
 lmtest::dwtest(stj_ind)
 
-tri_ind <- glm(
+tri_ind <- betareg(
   surv_egg_smolt ~ cohort +
     co_gr_median_temp + co_gr_var_temp +
     em_median_temp + em_var_temp + em_dd_u_16_temp +
     co_year_mean_sum_ptgi + co_30d_mean_disch +
     co_fdd_bimon_ja_fe + co_mean_forest,
-  data = tri_clean, family = gaussian()
+  data = tri_clean, 
+  link = "logit"
 )
 acf(residuals(tri_ind))
 lmtest::dwtest(tri_ind)
