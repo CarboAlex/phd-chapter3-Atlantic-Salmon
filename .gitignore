@@ -66,6 +66,7 @@ R/00_raw_data/telemetry/*.csv
 
 # MELCCFP raw data
 R/00_raw_data/salmon/BDFUSION_2024.xlsm
+R/00_raw_data/salmon/Rapport St-Jean_Trinite_2024.xlsx
 
 # River temperature and discharge raw data
 R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024_SJ.csv
