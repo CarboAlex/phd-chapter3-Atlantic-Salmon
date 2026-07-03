@@ -80,7 +80,7 @@ R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024
 R/03_clean_data/
 R/04_analysis/**/*.fst
 
-# Derived datasets — ignored by default (generated from confidential raw data)
+# Derived datasets — ignored by default (generated from confidential raw data and/or data too heavy)
 R/00_derived_data/*.fst
 R/00_derived_data/*.csv
 
@@ -88,6 +88,8 @@ R/00_derived_data/*.csv
 !R/00_derived_data/*_EXAMPLE.fst
 !R/00_derived_data/*_EXAMPLE.csv
 
+# Personal TOKEN to download data on Copernicus
+R/02_prepare_data/SST/.Renviron
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TEST SCRIPTS
