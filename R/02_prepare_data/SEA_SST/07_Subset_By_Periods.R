@@ -537,11 +537,3 @@ write_fst(stj_2sw, file.path(output_dir, "TH_annual_stj_2sw.fst"))
 write_fst(tri_1sw, file.path(output_dir, "TH_annual_tri_1sw.fst"))
 write_fst(tri_2sw, file.path(output_dir, "TH_annual_tri_2sw.fst"))
 
-
-
-
-
-
-
-
-

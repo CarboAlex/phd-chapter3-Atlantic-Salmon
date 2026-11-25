@@ -26,7 +26,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 1: LIBRARIES
+# LIBRARIES
 # ══════════════════════════════════════════════════════════════════════════════
 
 library(fst)
@@ -46,7 +46,7 @@ library(rnaturalearthdata)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 2: WORKING DIRECTORY
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ─────────────────────────────────────────────────────────
@@ -62,15 +62,11 @@ setwd(base_path)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: DATA IMPORT
+# DATA IMPORT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── River temperature and discharge (Saint-Jean) ──────────────────────────────
 # SOURCE: CEQEAU hydrological model output provided by MELCCFP.
-# STATUS: Confidential — not included in this repository.
-#         An example file with identical structure and simulated data is
-#         available at the same path with the suffix _EXAMPLE.csv.
-#         To request access, contact MELCCFP once the thesis is published.
 temp_sj_raw <- read.csv(
   file.path(base_path,
             "R/00_raw_data/Temperature_Discharge_River",
@@ -79,10 +75,6 @@ temp_sj_raw <- read.csv(
 
 # ── River temperature and discharge (Trinite) ─────────────────────────────────
 # SOURCE: CEQEAU hydrological model output provided by MELCCFP.
-# STATUS: Confidential — not included in this repository.
-#         An example file with identical structure and simulated data is
-#         available at the same path with the suffix _EXAMPLE.csv.
-#         To request access, contact MELCCFP once the thesis is published.
 temp_tr_raw <- read.csv(
   file.path(base_path,
             "R/00_raw_data/Temperature_Discharge_River",
@@ -90,11 +82,6 @@ temp_tr_raw <- read.csv(
 )
 
 # ── Smolt emigration phenology (Saint-Jean) ───────────────────────────────────
-# SOURCE: PIT-tag capture data processed in smolt phenology scripts.
-# STATUS: Confidential — not included in this repository.
-#         An example file with identical structure and simulated data is
-#         available at the same path with the suffix _EXAMPLE.fst.
-#         To request access, contact MELCCFP once the thesis is published.
 median_smolt_date_stj <- read_fst(
   file.path(base_path,
             "R/01_derived_data",
@@ -102,11 +89,6 @@ median_smolt_date_stj <- read_fst(
 )
 
 # ── Smolt emigration phenology (Trinite) ──────────────────────────────────────
-# SOURCE: PIT-tag capture data processed in smolt phenology scripts.
-# STATUS: Confidential — not included in this repository.
-#         An example file with identical structure and simulated data is
-#         available at the same path with the suffix _EXAMPLE.fst.
-#         To request access, contact MELCCFP once the thesis is published.
 median_smolt_date_tri <- read_fst(
   file.path(base_path,
             "R/01_derived_data",
@@ -117,7 +99,7 @@ median_smolt_date_tri <- read_fst(
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 4: CONFIGURATION
+# CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Directory containing monthly ESA CCI SST NetCDF files
@@ -141,7 +123,7 @@ FID_TRI <- 1L
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 5: FUNCTIONS
+# FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── prepare_smolt_dates ───────────────────────────────────────────────────────
@@ -577,10 +559,8 @@ build_delta_T <- function(sst_data, river_temp_data, river_label) {
 }
 
 
-
-
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 6: MAIN SCRIPT
+# MAIN SCRIPT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Prepare smolt emigration date windows ─────────────────────────────────────

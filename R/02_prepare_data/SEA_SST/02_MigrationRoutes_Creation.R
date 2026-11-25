@@ -4,10 +4,10 @@
 # Atlantic Salmon Marine Migration Corridors — Spatial Polygon Construction
 # =============================================================================
 # 
-# Purpose : Delineate five spatial polygons representing the marine migration
-#           route of Atlantic salmon post-smolts from river mouth to the
-#           Labrador Sea. These polygons are used to extract satellite-derived
-#           environmental variables (SST, zooplankton proxy) along the route.
+# Delineate five spatial polygons representing the marine migration
+# route of Atlantic salmon post-smolts from river mouth to the
+# Labrador Sea. These polygons are used to extract satellite-derived
+# environmental variables (SST, zooplankton proxy) along the route.
 #
 # Polygons:
 #   1. Trinité migration corridor (North Shore)
@@ -172,12 +172,12 @@ lon_ns_limit <- -56.830072  # North-eastern limit of corridor (Labrador coast)
 lat_ns_limit <-  51.516840
 
 
-# ── Step 1: Create initial 100 km coastal buffer ──────────────────────────────
+# ── Create initial 100 km coastal buffer ──────────────────────────────
 area_ns <- st_buffer(world_parts[10, ], migration_route_width, endCapStyle = "SQUARE")
 area_ns <- st_difference(area_ns, world_parts[10, ])  # Keep only the water-side band
 
 
-# ── Step 2: Define SW and NE boundary polygons to clip the buffer ─────────────
+# ── Define SW and NE boundary polygons to clip the buffer ─────────────
 
 # South-western boundary — near Trinité river mouth
 river_mouth_t_wgs84   <- st_sfc(st_point(c(lon_t, lat_t)), crs = wgs84)
@@ -220,7 +220,7 @@ north_east_limit_ns_square <- matrix(c(
 north_east_limit_ns_square <- st_sfc(st_polygon(list(north_east_limit_ns_square)), crs = nad83_can_lambert)
 
 
-# ── Step 3: Build the boundary mask and clip the buffer ───────────────────────
+# ── Build the boundary mask and clip the buffer ───────────────────────
 temp_buffer_area_ns <- st_buffer(area_ns, 20000, endCapStyle = "SQUARE")
 temp_buffer_area_ns <- st_difference(temp_buffer_area_ns, area_ns)
 
@@ -233,7 +233,7 @@ temp_buffer_area_ns <- st_union(rbind(
 area_ns <- st_difference(area_ns, temp_buffer_area_ns)
 
 
-# ── Step 4: Isolate corridor polygon and remove land overlap ──────────────────
+# ── Isolate corridor polygon and remove land overlap ──────────────────
 area_ns       <- st_sf(geometry = st_geometry(area_ns))
 area_ns_parts <- st_cast(area_ns, "POLYGON")
 area_ns_parts$ID <- 1:nrow(area_ns_parts)
@@ -242,7 +242,7 @@ area_ns_parts <- area_ns_parts[area_ns_parts$ID == 2, ]
 area_ns_final <- st_difference(area_ns_parts, st_union(world_parts[c(10, 12, 13, 14), ]))
 
 
-# ── Step 5: Separate coast and open-sea lines; crop south of Anticosti ────────
+# ── Separate coast and open-sea lines; crop south of Anticosti ────────
 lines_ns <- st_segments(area_ns_final)
 
 # Remove the two polygon end-cap segments (not useful for this step)
@@ -282,7 +282,7 @@ reference_crop_tr_cor <- st_sfc(st_polygon(list(reference_crop_tr_cor)), crs = n
 area_ns_final <- st_difference(area_ns_final, reference_crop_tr_cor)
 
 
-# ── Step 6: Keep only the main corridor polygon; clip at Belle Isle line ───────
+# ── Keep only the main corridor polygon; clip at Belle Isle line ───────
 polygons_list     <- st_cast(area_ns_final, "POLYGON")
 polygons_list$ID  <- 1:nrow(polygons_list)
 tr_area_ns_final  <- polygons_list[2, ]
@@ -319,7 +319,7 @@ lat_large_anticosti_50km  <- 48.712857;  lon_large_anticosti_50km  <- -61.341346
 lat_large_anticosti_25km  <- 48.877082;  lon_large_anticosti_25km  <- -61.584725
 
 
-# ── Step 1: Build the migration line ─────────────────────────────────────────
+# ── Build the migration line ─────────────────────────────────────────
 mouth_sj               <- st_transform(st_sfc(st_point(c(lon_sj, lat_sj)),                       crs = wgs84), nad83_can_lambert)
 via_mouth_gaspe_bay    <- st_transform(st_sfc(st_point(c(lon_mouth_gaspe_bay, lat_mouth_gaspe_bay)), crs = wgs84), nad83_can_lambert)
 via_large_anticosti_50km <- st_transform(st_sfc(st_point(c(lon_large_anticosti_50km, lat_large_anticosti_50km)), crs = wgs84), nad83_can_lambert)
@@ -349,12 +349,12 @@ migration_line_sj_25km <- st_sf(
 )
 
 
-# ── Step 2: Buffer the migration lines ───────────────────────────────────────
+# ── Buffer the migration lines ───────────────────────────────────────
 migration_corridor_sj_50km <- st_buffer(migration_line_sj_50km, migration_route_width / 2, endCapStyle = "SQUARE")
 migration_corridor_sj_25km <- st_buffer(migration_line_sj_25km, migration_route_width / 4, endCapStyle = "SQUARE")
 
 
-# ── Step 3: Remove land overlap and clip at Belle Isle line ──────────────────
+# ── Remove land overlap and clip at Belle Isle line ──────────────────
 sj_area_final_50km  <- st_difference(migration_corridor_sj_50km, st_union(world_parts[c(10, 13), ]))
 area_sj_final_25km  <- st_difference(migration_corridor_sj_25km, st_union(world_parts[c(10, 12, 13, 14), ]))
 
@@ -386,7 +386,7 @@ wgs84_north_lab_point_bis <- c(-55.603023, 52.195050)
 wgs84_north_tn_point_bis  <- c(-55.426483, 51.399200)
 
 
-# ── Step 1: Snap corner points to coastlines ─────────────────────────────────
+# ── Snap corner points to coastlines ─────────────────────────────────
 north_lab_point_bis <- st_transform(st_sfc(st_point(wgs84_north_lab_point_bis), crs = wgs84), nad83_can_lambert)
 north_lab_point_bis <- st_cast(st_nearest_points(north_lab_point_bis, world_parts[10, ]), "POINT")[2]
 
@@ -397,7 +397,7 @@ south_lab_point_bis <- end1_tn   # Southern corners = endpoints of limit_lab_tn_
 south_tn_point_bis  <- end2_lab
 
 
-# ── Step 2: Build and clip the polygon ───────────────────────────────────────
+# ── Build and clip the polygon ───────────────────────────────────────
 bis_square <- matrix(c(
   st_coordinates(south_lab_point_bis)[1], st_coordinates(south_lab_point_bis)[2],
   st_coordinates(south_tn_point_bis)[1],  st_coordinates(south_tn_point_bis)[2],
@@ -455,7 +455,7 @@ polygone_est <- st_sfc(st_polygon(list(rbind(
 world_parts_all_lab_tn <- st_intersection(world_parts_all_lab_tn, polygone_est)
 
 
-# ── Step 1: Build the square just north of the Strait ─────────────────────────
+# ── Build the square just north of the Strait ─────────────────────────
 x_start_square_bis <- -55.774177 + 0.5
 y_start_square_bis <-  52.779143
 
@@ -477,7 +477,7 @@ coords_square_bis_nad83 <- matrix(c(
 square_bis_nad83 <- st_sfc(st_polygon(list(coords_square_bis_nad83)), crs = nad83_can_lambert)
 
 
-# ── Step 2: Remove overlapping land and Strait polygon ───────────────────────
+# ── Remove overlapping land and Strait polygon ───────────────────────
 square_bis_nad83 <- st_difference(square_bis_nad83, bis_area)
 square_bis_nad83 <- st_difference(square_bis_nad83, st_union(world_parts_all_lab_tn))
 
@@ -502,19 +502,9 @@ ggplot() +
 
 
 # =============================================================================
-# Labrador Sea (offshore zone)
+# Labrador Sea
 # =============================================================================
-# Strategy: buffer NAFO sampling stations from Bradbury et al. (2021) to
-# define the offshore Labrador Sea zone where Atlantic salmon overwinter.
-# The Labrador coast buffer is constructed separately and the Strait polygon
-# is excluded to avoid spatial overlap.
-#
-# Reference: Bradbury et al. (2021) ICES J. Mar. Sci., 78(4), 1434-1443.
-# (Range-wide genetic assignment confirms long-distance oceanic migration)
 
-# ── Step 1: Labrador coast buffer (boundary polygon) ─────────────────────────
-# Custom polygon covering the relevant portion of the Labrador coast and
-# eastern Newfoundland coast — used to extract the marine area of interest.
 coords_lab_select <- matrix(c(
   -64,       61,
   -64,       59.822586,
@@ -538,7 +528,7 @@ lab_buffer_area <- st_difference(poly_lab_select, st_union(world_parts_all_lab_t
 lab_buffer_area <- st_difference(lab_buffer_area, bis_area)
 
 
-# ── Step 2: Offshore station buffers (Bradbury et al. 2021) ──────────────────
+# ── SOffshore station buffers (Bradbury et al. 2021) ──────────────────
 lab_sampling_coord <- data.frame(
   Station   = c("LBS_1F", "LBS_2G", "LBS_2H", "LBS_2J"),
   Latitude  = c(58.436, 56.511, 54.089, 50.804),

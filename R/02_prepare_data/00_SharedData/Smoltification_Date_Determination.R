@@ -1,10 +1,38 @@
 
 
-
+# ══════════════════════════════════════════════════════════════════════════════
+# HEADER
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# Smolt migration dates per cohort
+#
+# Description:
+#   Computes, for each cohort, the median, standard deviation and quantiles
+#   (5, 25, 75, 95 %) of the smolt migration day of year, from the daily
+#   captures at the downstream traps of the St. Jean and Trinite rivers.
+#   Cohorts without captures are imputed by pooling the captures of the
+#   years within a ±5-year window.
+#
+# Inputs:
+#   R/00_raw_data/salmon/Smolt_Daily_Captures_StJean.csv
+#   R/00_raw_data/salmon/Smolt_Daily_Captures_Trinite.csv
+#
+# Outputs:
+#   R/01_derived_data/Year_Median_Date_StJean.fst
+#   R/01_derived_data/Year_Median_Date_Trinite.fst
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: WORKING DIRECTORY
+# LIBRARIES
+# ══════════════════════════════════════════════════════════════════════════════
+
+library(tidyr)
+library(dplyr)
+library(fst)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ─────────────────────────────────────────────────────────
@@ -17,64 +45,27 @@ base_path    <- paste(path_parts[1:target_index], collapse = "/")
 setwd(base_path)
 
 
-# |========================|
-# |     Load libraries     |
-# |========================|
+# ══════════════════════════════════════════════════════════════════════════════
+# DATA IMPORT
+# ══════════════════════════════════════════════════════════════════════════════
 
-library(readxl)
-library(lubridate)
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-library(ggpubr)
-library(broom)
-library(fst)
-
-
-# |=========================|
-# |     Import raw data     |
-# |=========================|
+col_types <- c(date = "Date", cohort = "numeric", doy = "numeric", captures = "numeric")
 
 # Trinite
-df_t <- as.data.frame(read_excel(
-  "R/00_raw_data/salmon/Rapport St-Jean_Trinite_2024.xlsx", 
-  sheet = "T2024FIG5", range = "O4:BF57"))
+df_t <- read.csv("R/00_raw_data/salmon/Smolt_Daily_Captures_Trinite.csv",
+                 colClasses = col_types)
 
 # St-Jean
-df_sj <- as.data.frame(read_excel(
-  "R/00_raw_data/salmon/Rapport St-Jean_Trinite_2024.xlsx", 
-  sheet = "S2024FIG4", range = "P4:BB58"))
+df_sj <- read.csv("R/00_raw_data/salmon/Smolt_Daily_Captures_StJean.csv",
+                  colClasses = col_types)
 
 
-# |=================================================================|
-# |     Create a function to rearange dataframe from both river     |
-# |=================================================================|
+# ══════════════════════════════════════════════════════════════════════════════
+# FUNCTIONS
+# ══════════════════════════════════════════════════════════════════════════════
 
+# Function computing the migration dates of each cohort
 arrange_bd <- function(data){
-
-  # Make sure there are no spaces and accents in column names
-  colnames(data) <- tolower(colnames(data))
-  colnames(data) <- iconv(colnames(data), from = "UTF-8", to = "ASCII//TRANSLIT")
-  colnames(data) <- gsub(pattern = " ", replacement = "_", x = colnames(data))
-  
-  # Since the year in column date is not the right one, create a column for month and a column for day
-  data <- data %>%
-    dplyr::mutate(date = as.Date(date),
-           month = month(date),
-           day = day(date)) %>%
-    # Keep only columns "Month", "Day" and all year columns
-    dplyr::select(month, day, matches("^[0-9]+$")) %>%
-    pivot_longer(
-      cols = -c(month, day),
-      names_to = "cohort",
-      values_to = "captures"
-    ) %>%
-    dplyr::mutate(across(everything(), as.numeric)) %>%
-    arrange(cohort, month, day) %>%
-    dplyr::mutate(date = as.Date(paste(cohort, month, day, sep = "-")),
-           doy = yday(date)) %>%
-    dplyr::select(date, cohort, month, day, doy, captures) %>%
-    as.data.frame()
   
   # Calculate median date
   median_dates <- data %>%
@@ -103,24 +94,7 @@ arrange_bd <- function(data){
   return(list(data = data, median_dates = median_dates))
 }
 
-
-
-df_t_arranged <- arrange_bd(data = df_t)
-df_sj_arranged <- arrange_bd(data = df_sj)
-
-# Add river name
-df_t_arranged$median_dates <- df_t_arranged$median_dates %>%
-  dplyr::mutate(river = "tri") %>%
-  dplyr::select(river, everything())
-df_sj_arranged$median_dates <- df_sj_arranged$median_dates %>%
-  dplyr::mutate(river = "stj") %>%
-  dplyr::select(river, everything())
-
-
-# |=================================================================|
-# |      IMPUTATION OF MISSING YEARS (±5-year sliding window)       |
-# |=================================================================|
-
+# Imputation of missing years (±5-year sliding window)
 impute_missing_phenology <- function(arranged_obj) {
   
   median_dates <- arranged_obj$median_dates
@@ -186,17 +160,31 @@ impute_missing_phenology <- function(arranged_obj) {
   return(arranged_obj)
 }
 
-# Apply to both rivers
+
+# ══════════════════════════════════════════════════════════════════════════════
+# MIGRATION DATES
+# ══════════════════════════════════════════════════════════════════════════════
+
+df_t_arranged <- arrange_bd(data = df_t)
+df_sj_arranged <- arrange_bd(data = df_sj)
+
+# Add river name
+df_t_arranged$median_dates <- df_t_arranged$median_dates %>%
+  dplyr::mutate(river = "tri") %>%
+  dplyr::select(river, everything())
+df_sj_arranged$median_dates <- df_sj_arranged$median_dates %>%
+  dplyr::mutate(river = "stj") %>%
+  dplyr::select(river, everything())
+
+# Apply imputation to both rivers
 df_sj_arranged <- impute_missing_phenology(df_sj_arranged)
 df_t_arranged  <- impute_missing_phenology(df_t_arranged)
 
 
-# |=======================|
-# |     Export result     |
-# |=======================|
+# ══════════════════════════════════════════════════════════════════════════════
+# EXPORT
+# ══════════════════════════════════════════════════════════════════════════════
 
 write_fst(df_t_arranged$median_dates, path = "R/01_derived_data/Year_Median_Date_Trinite.fst")
 write_fst(df_sj_arranged$median_dates, path = "R/01_derived_data/Year_Median_Date_StJean.fst")
-
-
 

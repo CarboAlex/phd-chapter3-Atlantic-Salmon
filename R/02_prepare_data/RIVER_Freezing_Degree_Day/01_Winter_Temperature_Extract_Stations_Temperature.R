@@ -1,11 +1,11 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 1: HEADER
+# HEADER
 # ══════════════════════════════════════════════════════════════════════════════
 #
 # Imports, merges, and cleans daily air temperature records from multiple
-# climate stations near the Saint-Jean and Trinite rivers, tests inter-station
+# climate stations near the St. Jean and Trinite rivers, tests inter-station
 # correlations, and exports daily averages across stations for each river.
 #
 # Note: mean temperature (degrees C) is defined as the average of the daily
@@ -14,9 +14,9 @@
 # Data source: ClimateData.ca (https://climatedata.ca/)
 #
 # Inputs:
-#   - R/00_raw_data/Air_Temperature_Stations/*Trinite*.csv
+#   - R/00_raw_data/Air_Temperature_Stations/Trinite.csv
 #       Daily air temperature records for stations near the Trinite River (CSV)
-#   - R/00_raw_data/Air_Temperature_Stations/*StJean*.csv
+#   - R/00_raw_data/Air_Temperature_Stations/StJean.csv
 #       Daily air temperature records for stations near the Saint-Jean River
 #       (CSV)
 #
@@ -31,7 +31,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 2: LIBRARIES
+# LIBRARIES
 # ══════════════════════════════════════════════════════════════════════════════
 
 library(data.table)
@@ -45,7 +45,7 @@ library(fst)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: WORKING DIRECTORY
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ──────────────────────────────────────────────────────
@@ -59,12 +59,11 @@ setwd(base_path)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 4: DATA IMPORT
+# DATA IMPORT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Air temperature station files — Trinite ───────────────────────────────────
 # SOURCE: ClimateData.ca — Canadian climate station records
-# STATUS: Included in this repository
 
 tri_files_path <- list.files(
   file.path(base_path, "R/00_raw_data/Air_Temperature_Stations"),
@@ -77,7 +76,6 @@ tri_temp      <- rbindlist(tri_temp_list)
 
 # ── Air temperature station files — Saint-Jean ────────────────────────────────
 # SOURCE: ClimateData.ca — Canadian climate station records
-# STATUS: Included in this repository
 
 stj_files_path <- list.files(
   file.path(base_path, "R/00_raw_data/Air_Temperature_Stations"),
@@ -89,7 +87,7 @@ stj_temp      <- rbindlist(stj_temp_list)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 5: CONFIGURATION
+# CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Columns retained from the raw station files
@@ -102,7 +100,7 @@ out_path <- file.path(base_path, "R/01_derived_data/Winter_Temperature")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 6: FUNCTIONS
+# FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── cor_test_plot ─────────────────────────────────────────────────────────────
@@ -134,7 +132,7 @@ cor_test_plot <- function(var_1, var_2) {
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 7: MAIN SCRIPT
+# MAIN SCRIPT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Clean and reformat Trinite station data ───────────────────────────────────

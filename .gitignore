@@ -1,8 +1,3 @@
-
-# Temporary
-R/04_analysis/River/03_River_Modeling.R
-
-
 # ══════════════════════════════════════════════════════════════════════════════
 # R STANDARD ARTIFACTS
 # ══════════════════════════════════════════════════════════════════════════════
@@ -61,12 +56,15 @@ rsconnect/
 # CONFIDENTIAL RAW DATA
 # ══════════════════════════════════════════════════════════════════════════════
 
-# Telemetry raw data (Lilly et al., unpublished)
+# Telemetry raw data (Lilly et al., 2026)
 R/00_raw_data/telemetry/*.csv
 
 # MELCCFP raw data
 R/00_raw_data/salmon/BDFUSION_2024.xlsm
 R/00_raw_data/salmon/Rapport St-Jean_Trinite_2024.xlsx
+
+# Scripts extracting the MELCCFP data for publication (not published)
+R/02_prepare_data/SURVIVAL_Salmon/
 
 # River temperature and discharge raw data
 R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024_SJ.csv
@@ -76,36 +74,38 @@ R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024
 !R/00_raw_data/**/*_EXAMPLE.csv
 !R/00_raw_data/**/*_EXAMPLE.xlsx
 
-# Clean datasets — ignored by default until publication (generated from confidential raw data)
-R/03_clean_data/
-R/04_analysis/**/*.fst
-
-# Derived datasets — ignored by default (generated from confidential raw data and/or data too heavy)
-R/00_derived_data/*.fst
-R/00_derived_data/*.csv
-
-# Exception: example versions are always published
-!R/00_derived_data/*_EXAMPLE.fst
-!R/00_derived_data/*_EXAMPLE.csv
-
-# Personal TOKEN to download data on Copernicus
-R/02_prepare_data/SST/.Renviron
 
 # ══════════════════════════════════════════════════════════════════════════════
-# TEST SCRIPTS
+# THIRD-PARTY RAW DATA (downloadable at the source, not redistributed)
 # ══════════════════════════════════════════════════════════════════════════════
 
-R/04_analysis/River/04_Compare_Dredge_vs_Hypothesis_Method.R
-R/04_analysis/River/stj_boot.rds
-R/04_analysis/River/tri_boot.rds
+# Air temperature: weather stations (ClimateData.ca) and ERA5 rasters (Copernicus)
+R/00_raw_data/Air_Temperature_Stations/
+R/00_raw_data/Air_Temperature_Raster/
 
-R/04_analysis/River/05_Heteroscedasticity_STJ.R
+# Forest disturbance maps (MFFP), their documentation and the map-sheet index
+R/00_raw_data/Forest/
+
+# CPR zooplankton data (DASSH) — redistribution restricted by the CPR Survey
+R/00_raw_data/Plankton_LabradorSea/
+
+# ICES WGNAS tables and exploitation rates from Imlay et al. (2024)
+R/00_raw_data/Exploitation_Sea/
+
+# ESA CCI sea surface temperature (Copernicus), including temporary download folders
+R/00_raw_data/SST_ORAS5_Labrador/
+
+# Migration layers (created directly in scripts)
+R/00_raw_data/ReferenceMigrationLayers/
+
 
 # ══════════════════════════════════════════════════════════════════════════════
-# RESULTS NOT NECESSARY TO SHOW (WILL LIKELY BE PRESENTED IN THE PAPER)
+# DERIVED AND CLEAN DATASETS
 # ══════════════════════════════════════════════════════════════════════════════
 
-R/04_analysis/River/River_Table_Results.xlsx
+# Derived datasets — ignored (regenerable by the scripts, or generated from
+# confidential raw data). Published exceptions are listed at the end of the file.
+R/01_derived_data/**
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -123,27 +123,45 @@ R/04_analysis/River/River_Table_Results.xlsx
 *.sbx
 *.cpg
 *.gpkg
+*.geojson
 
 # ══════════════════════════════════════════════════════════════════════════════
-# R BINARY DATA FORMATS
-# ══════════════════════════════════════════════════════════════════════════════
-
-# Ignore all .fst and .rds by default
-*.fst
-*.RDS
-*.rds
-
-# Exception: derived datasets shared for reproducibility
-!data/derived/*.fst
-
-# ══════════════════════════════════════════════════════════════════════════════
-# INTERMEDIATE DATA (regenerable by running the scripts)
-# ══════════════════════════════════════════════════════════════════════════════
-data/intermediate/
-
-# ══════════════════════════════════════════════════════════════════════════════
-# SYSTEM FILES
+# SYSTEM AND TEMPORARY FILES
 # ══════════════════════════════════════════════════════════════════════════════
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Microsoft Office / LibreOffice lock files (created while a file is open)
+~$*
+.~lock.*#
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PUBLICATION EXCEPTIONS (note to keep it at the end: the last matching rule wins)
+# ══════════════════════════════════════════════════════════════════════════════
+
+!R/01_derived_data/Year_Median_Date_*.fst
+!R/01_derived_data/Year_Migration_Dates_River_Sea.fst
+!R/03_clean_data/**/*.fst
+!R/04_analysis/**/Final_Data/*.fst
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

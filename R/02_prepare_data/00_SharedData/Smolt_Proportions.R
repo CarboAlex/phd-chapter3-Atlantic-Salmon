@@ -1,7 +1,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 1: HEADER
+# HEADER
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Computes cohort-level smolt age-class proportions for two rivers (stj, tri).
@@ -10,7 +10,8 @@
 # is excluded. Final proportions are renormalized to sum to 1.
 #
 # Inputs:
-#   - R/00_raw_data/salmon/BDFUSION_2024.xlsm  [Excel workbook, sheet 1]
+#   - R/00_raw_data/salmon/Salmon_Monitoring_StJean_Trinite_2024.csv
+#       Smolt counts by age class, river and year (MELCCFP 2024 report, Table 5)
 #
 # Outputs:
 #   - R/01_derived_data/Smolt_Proportions.fst  [fst data frame]
@@ -19,17 +20,16 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 2: LIBRARIES
+# LIBRARIES
 # ══════════════════════════════════════════════════════════════════════════════
 
-library(readxl)
 library(dplyr)
 library(tidyr)
 library(fst)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: WORKING DIRECTORY
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ─────────────────────────────────────────────────────────
@@ -43,25 +43,19 @@ setwd(base_path)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 4: DATA IMPORT
+# DATA IMPORT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Smolt counts by smoltification year ───────────────────────────────────────
-# SOURCE: Salmon monitoring database — BDFUSION (Direction de la gestion des
-#         especes et des habitats, Quebec).
-# STATUS: Confidential — not included in this repository.
-
-prop_smolt <- as.data.frame(
-  read_excel(
-    file.path(base_path, "R/00_raw_data/salmon/BDFUSION_2024.xlsm"),
-    sheet = 1,
-    n_max = 91
-  )
+# SOURCE: MELCCFP annual report 2024 (Table 5)
+prop_smolt <- read.csv(
+  file.path(base_path,
+            "R/00_raw_data/salmon/Salmon_Monitoring_StJean_Trinite_2024.csv")
 )
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 5: CONFIGURATION
+# CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Age classes whose mean proportional contribution is below this threshold
@@ -71,7 +65,7 @@ NA_THRESHOLD <- 0.10   # 10 % — adjust here for sensitivity analysis
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 6: FUNCTIONS
+# FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── build_cohort_props ────────────────────────────────────────────────────────
@@ -82,8 +76,6 @@ NA_THRESHOLD <- 0.10   # 10 % — adjust here for sensitivity analysis
 # Parameters:
 #   river_data  data frame for a single river containing columns year,
 #               smolt_nb_2yr, smolt_nb_3yr, smolt_nb_4yr, smolt_nb_5yr.
-# Returns: data frame with columns cohort, smolt_nb_2yr_c, smolt_nb_3yr_c,
-#          smolt_nb_4yr_c, smolt_nb_5yr_c.
 build_cohort_props <- function(river_data) {
   river_data %>%
     dplyr::arrange(year) %>%
@@ -224,51 +216,18 @@ impute_and_normalize <- function(cohort_raw, river_id,
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 7: MAIN SCRIPT
+# MAIN SCRIPT
 # ══════════════════════════════════════════════════════════════════════════════
-
-# ── Standardise column names ──────────────────────────────────────────────────
-# Remove or replace special characters so column names are ASCII-safe and
-# follow a consistent snake_case convention.
-colnames(prop_smolt) <- iconv(colnames(prop_smolt),
-                              from = "UTF-8", to = "ASCII//TRANSLIT")
-colnames(prop_smolt) <- gsub("\\.",     "",      colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("\\(",     "",      colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("\\)",     "",      colnames(prop_smolt))
-colnames(prop_smolt) <- gsub(" ",       "_",     colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("\\%",     "PC",    colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("\\+",     "P",     colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("/",       "_Par_", colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("-",       "_",     colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("l'annee", "annee", colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("oufs",    "oeufs", colnames(prop_smolt))
-colnames(prop_smolt) <- gsub("__",      "_",     colnames(prop_smolt))
-colnames(prop_smolt) <- tolower(colnames(prop_smolt))
-
-# Transliterate river name column and normalise to lowercase short codes
-prop_smolt$riviere <- iconv(prop_smolt$riviere,
-                            from = "UTF-8", to = "ASCII//TRANSLIT")
-prop_smolt$riviere <- tolower(prop_smolt$riviere)
-prop_smolt$riviere <- ifelse(prop_smolt$riviere == "saint-jean", "stj",
-                             prop_smolt$riviere)
-prop_smolt$riviere <- ifelse(prop_smolt$riviere == "trinite",    "tri",
-                             prop_smolt$riviere)
-
 
 # ── Select and rename smolt count columns ────────────────────────────────────
 prop_smolt_sub <- prop_smolt %>%
-  dplyr::select(
-    "riviere", "annee",
-    "smolt_nb_en_devalaison_2_p", "smolt_nb_en_devalaison_3_p",
-    "smolt_nb_en_devalaison_4_p", "smolt_nb_en_devalaison_5_p"
-  ) %>%
+  dplyr::select(river, year,
+                smolt_n_age2, smolt_n_age3, smolt_n_age4, smolt_n_age5) %>%
   dplyr::rename(
-    river        = riviere,
-    year         = annee,
-    smolt_nb_2yr = smolt_nb_en_devalaison_2_p,
-    smolt_nb_3yr = smolt_nb_en_devalaison_3_p,
-    smolt_nb_4yr = smolt_nb_en_devalaison_4_p,
-    smolt_nb_5yr = smolt_nb_en_devalaison_5_p
+    smolt_nb_2yr = smolt_n_age2,
+    smolt_nb_3yr = smolt_n_age3,
+    smolt_nb_4yr = smolt_n_age4,
+    smolt_nb_5yr = smolt_n_age5
   )
 
 # Ensure every year between the observed minimum and maximum is represented;

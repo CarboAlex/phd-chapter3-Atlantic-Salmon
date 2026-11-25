@@ -1,7 +1,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 1: HEADER
+# HEADER
 # ══════════════════════════════════════════════════════════════════════════════
 #
 # Downloads a DEM and delineates the watershed of the Saint-Jean River using
@@ -33,7 +33,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 2: LIBRARIES
+# LIBRARIES
 # ══════════════════════════════════════════════════════════════════════════════
 
 library(sf)
@@ -45,7 +45,7 @@ library(whitebox)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: WORKING DIRECTORY
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ──────────────────────────────────────────────────────
@@ -59,11 +59,11 @@ setwd(base_path)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 5: CONFIGURATION
+# CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
 
 out_dir   <- "R/01_derived_data/ForestActivities"  # Output directory
-out_river <- "STJ"                                  # River identifier tag
+out_river <- "STJ"                                 # River identifier tag
 
 # Bounding box covering the Saint-Jean watershed (WGS84)
 bbx <- c(
@@ -77,7 +77,7 @@ snap_dist <- 200  # Snapping distance (m) to align pour point with flow accumula
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 7: MAIN SCRIPT
+# MAIN SCRIPT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Build reference area polygon ──────────────────────────────────────────────

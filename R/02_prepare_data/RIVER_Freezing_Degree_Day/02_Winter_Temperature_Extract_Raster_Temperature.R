@@ -1,7 +1,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 1: HEADER
+# HEADER
 # ══════════════════════════════════════════════════════════════════════════════
 #
 # Imports ERA5 air temperature raster data (GRIB format) from the Copernicus
@@ -20,20 +20,20 @@
 #   - R/00_raw_data/Air_Temperature_Raster/tri_2009_2025.zip
 #       ERA5 hourly air temperature rasters for the Trinite area (GRIB in ZIP)
 #   - R/00_raw_data/Air_Temperature_Raster/stj_1978_2024.zip
-#       ERA5 hourly air temperature rasters for the Saint-Jean area (GRIB in
+#       ERA5 hourly air temperature rasters for the St. Jean area (GRIB in
 #       ZIP)
 #
 # Outputs:
 #   - R/01_derived_data/Winter_Temperature/tri_air_temp_daily_mean_rasters.fst
 #       Daily mean air temperature for the Trinite River (FST)
 #   - R/01_derived_data/Winter_Temperature/stj_air_temp_daily_mean_rasters.fst
-#       Daily mean air temperature for the Saint-Jean River (FST)
+#       Daily mean air temperature for the St. Jean River (FST)
 #
 # ══════════════════════════════════════════════════════════════════════════════
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 2: LIBRARIES
+# LIBRARIES
 # ══════════════════════════════════════════════════════════════════════════════
 
 library(data.table)
@@ -47,7 +47,7 @@ library(sf)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: WORKING DIRECTORY
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ──────────────────────────────────────────────────────
@@ -61,13 +61,11 @@ setwd(base_path)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 4: DATA IMPORT
+# DATA IMPORT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── ERA5 raster files — Trinite ───────────────────────────────────────────────
 # SOURCE: Copernicus Climate Data Store (ERA5 reanalysis)
-# STATUS: Too large for GitHub — not included in this repository.
-#         Download from: https://cds.climate.copernicus.eu/requests?tab=all
 
 # GRIB files are extracted to a temporary directory and deleted after import
 tmpdir <- tempdir()
@@ -90,8 +88,6 @@ tri_2009_2025 <- rast(gribfile_tri_2009_2025)
 
 # ── ERA5 raster files — Saint-Jean ────────────────────────────────────────────
 # SOURCE: Copernicus Climate Data Store (ERA5 reanalysis)
-# STATUS: Too large for GitHub — not included in this repository.
-#         Download from: https://cds.climate.copernicus.eu/requests?tab=all
 
 unzip(file.path(base_path,
                 "R/00_raw_data/Air_Temperature_Raster/sj_1978_2024.zip"),
@@ -130,7 +126,7 @@ raster_area_km2(stj_1978_2024)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 5: CONFIGURATION
+# CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Output directory for derived temperature files
@@ -144,7 +140,7 @@ stj_mouth_lat  <-  48.780331
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 6: FUNCTIONS
+# FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── extract_air_temp_raster ───────────────────────────────────────────────────
@@ -195,7 +191,7 @@ extract_air_temp_raster <- function(data) {
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 7: MAIN SCRIPT
+# MAIN SCRIPT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Verify raster spatial coverage ───────────────────────────────────────────

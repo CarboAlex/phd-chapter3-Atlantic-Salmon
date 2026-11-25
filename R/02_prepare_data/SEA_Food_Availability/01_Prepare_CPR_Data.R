@@ -17,7 +17,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 1: LIBRARIES
+# LIBRARIES
 # ══════════════════════════════════════════════════════════════════════════════
 
 library(readxl)
@@ -35,7 +35,7 @@ library(units)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 2: WORKING DIRECTORY
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ──────────────────────────────────────────────────────
@@ -49,7 +49,7 @@ setwd(base_path)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: DATA IMPORT
+# DATA IMPORT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── CPR raw data ──────────────────────────────────────────────────────────────
@@ -57,7 +57,6 @@ setwd(base_path)
 #   David Johns (Marine Biological Association) (2023): Selected NW Atlantic
 #   CPR taxa. The Archive for Marine Species and Habitats Data (DASSH).
 #   https://doi.org/10.17031/6513f104926b6
-# STATUS: Included in this repository.
 cpr_raw <- read_excel(
   path = file.path(base_path,
                    "R/00_raw_data/Plankton_LabradorSea/NWAtl_CPR_Data.xlsx")
@@ -66,7 +65,7 @@ cpr_raw <- as.data.table(cpr_raw)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 4: FUNCTIONS
+# FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Biomass conversion: Richardson et al. (2006) ──────────────────────────────
@@ -76,7 +75,6 @@ cpr_raw <- as.data.table(cpr_raw)
 # Parameters:
 #   abundance  - numeric; number of individuals per CPR sample
 #   length_mm  - numeric; body length in millimetres
-# Returns: numeric vector of biomass values in grams
 richardson_et_al_2006 <- function(abundance, length_mm) {
   mass    <- 0.08 * length_mm^2.1
   biomass <- abundance * mass
@@ -90,7 +88,6 @@ richardson_et_al_2006 <- function(abundance, length_mm) {
 # Parameters:
 #   abundance  - numeric; number of individuals per CPR sample
 #   length_mm  - numeric; body length in millimetres
-# Returns: numeric vector of biomass values in grams
 krylov_1968 <- function(abundance, length_mm) {
   mass    <- 0.008 * length_mm^3
   biomass <- abundance * mass
@@ -99,7 +96,7 @@ krylov_1968 <- function(abundance, length_mm) {
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 5: MAIN SCRIPT
+# MAIN SCRIPT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Rename taxa columns ────────────────────────────────────────────────────────

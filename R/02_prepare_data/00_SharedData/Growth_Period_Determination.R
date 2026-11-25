@@ -1,7 +1,7 @@
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 1: HEADER
+# HEADER
 # ══════════════════════════════════════════════════════════════════════════════
 #
 # Identifies the annual growth period for Atlantic salmon in the St. Jean
@@ -34,17 +34,11 @@
 #       CEQEAU_Temperature_Discharge_1979_2024_TR.csv
 #       Simulated daily water temperature for Saint-Jean and Trinite (CSV)
 #
-# Outputs:
-#   - R/01_derived_data/GrowthPeriods/Growth_Periods_STJ.fst
-#       Annual growth period (start/end DOY) for Saint-Jean (FST)
-#   - R/01_derived_data/GrowthPeriods/Growth_Periods_TRI.fst
-#       Annual growth period (start/end DOY) for Trinite (FST)
-#
 # ══════════════════════════════════════════════════════════════════════════════
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 2: LIBRARIES
+# LIBRARIES
 # ══════════════════════════════════════════════════════════════════════════════
 
 library(fst)
@@ -55,7 +49,7 @@ library(mgcv)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 3: WORKING DIRECTORY
+# WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Working directory ──────────────────────────────────────────────────────
@@ -69,16 +63,10 @@ setwd(base_path)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 4: DATA IMPORT
+# DATA IMPORT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Daily water temperature — Saint-Jean ──────────────────────────────────────
-# SOURCE: CEQEAU hydrological model outputs
-# STATUS: Confidential — not included in this repository.
-#         An example file with identical structure and simulated data is
-#         available at the same path with the suffix _EXAMPLE.csv.
-#         To request access, contact the data provider once the thesis
-#         is published.
 temp_stj <- read.csv(
   file.path(base_path,
             "R/00_raw_data/Temperature_Discharge_River",
@@ -86,12 +74,6 @@ temp_stj <- read.csv(
 
 
 # ── Daily water temperature — Trinite ────────────────────────────────────────
-# SOURCE: CEQEAU hydrological model outputs
-# STATUS: Confidential — not included in this repository.
-#         An example file with identical structure and simulated data is
-#         available at the same path with the suffix _EXAMPLE.csv.
-#         To request access, contact the data provider once the thesis
-#         is published.
 temp_tri <- read.csv(
   file.path(base_path,
             "R/00_raw_data/Temperature_Discharge_River",
@@ -99,7 +81,7 @@ temp_tri <- read.csv(
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 5: CONFIGURATION
+# CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
 
 temp_threshold <- 6  # Growth temperature threshold (degrees C); see references
@@ -107,7 +89,7 @@ temp_threshold <- 6  # Growth temperature threshold (degrees C); see references
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 6: FUNCTIONS
+# FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── plot_gam_year ─────────────────────────────────────────────────────────────
@@ -120,7 +102,6 @@ temp_threshold <- 6  # Growth temperature threshold (degrees C); see references
 #   temp_threshold  numeric; temperature threshold in degrees C (default: 6)
 #   k               integer; number of basis functions for the cyclic spline
 #   river_name      character; river name used in the plot title
-# Returns: a ggplot object.
 
 plot_gam_year <- function(data, year_plot, temp_threshold = 6, k = 20,
                           river_name = "River") {
@@ -266,7 +247,7 @@ yearly_growth_period <- function(data, temp_threshold = 6, k_value = 30) {
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 7: MAIN SCRIPT
+# MAIN SCRIPT
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ── Reformat temperature data ─────────────────────────────────────────────────
