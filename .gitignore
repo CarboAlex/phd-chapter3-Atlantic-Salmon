@@ -136,6 +136,8 @@ desktop.ini
 ~$*
 .~lock.*#
 
+# Temporary files created by R markdown
+README.html
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PUBLICATION EXCEPTIONS (note to keep it at the end: the last matching rule wins)

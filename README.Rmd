@@ -13,9 +13,33 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Table des matières
--
--
--
+- [Structure du dépôt](#structure-du-dépôt)
+- [1. Données brutes](#1-données-brutes)
+  - [1.1 Données sur le saumon (MELCCFP)](#11-données-sur-le-saumon-melccfp)
+  - [1.2 Débit et température de l'eau (modèle CEQUEAU)](#12-débit-et-température-de-leau-modèle-cequeau)
+  - [1.3 Température de l'air](#13-température-de-lair)
+  - [1.4 Activité forestière](#14-activité-forestière)
+  - [1.5 Disponibilité alimentaire en mer](#15-disponibilité-alimentaire-en-mer)
+  - [1.6 Télémétrie acoustique](#16-télémétrie-acoustique)
+  - [1.7 Température de surface de la mer](#17-température-de-surface-de-la-mer)
+  - [1.8 Pêcheries et abondance en mer (ICES WGNAS)](#18-pêcheries-et-abondance-en-mer-ices-wgnas)
+- [2. Préparation des données et conception des variables](#2-préparation-des-données-et-conception-des-variables)
+  - [2.1 Données partagées](#21-données-partagées)
+  - [2.2 Variables d'eau douce](#22-variables-deau-douce)
+    - [2.2.1 Débit](#221-débit)
+    - [2.2.2 Activité forestière](#222-activité-forestière)
+    - [2.2.3 Température](#223-température)
+    - [2.2.4 Température hivernale (degrés-jours de gel)](#224-température-hivernale-degrés-jours-de-gel)
+  - [2.3 Variables marines](#23-variables-marines)
+    - [2.3.1 Conditions thermiques](#231-conditions-thermiques)
+    - [2.3.2 Disponibilité alimentaire](#232-disponibilité-alimentaire)
+    - [2.3.3 Différence de température entre la mer et la rivière à l'entrée en mer](#233-différence-de-température-entre-la-mer-et-la-rivière-à-lentrée-en-mer)
+    - [2.3.4 Taux d'exploitation en mer](#234-taux-dexploitation-en-mer)
+    - [2.3.5 Abondance avant la pêche (densité en mer)](#235-abondance-avant-la-pêche-densité-en-mer)
+- [3. Modélisation](#3-modélisation)
+  - [3.1 Survie en eau douce](#31-survie-en-eau-douce)
+  - [3.2 Retour de la mer](#32-retour-de-la-mer)
+- [4. Environnement logiciel](#4-environnement-logiciel)
 
 
 ## Structure du dépôt
@@ -121,10 +145,10 @@ Attention : selon la colonne, `year` correspond soit à l'année d'entrée en me
 #### Stations météorologiques — St. Jean
 
 - **Fichier(s)** :
-- `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_1_to_10000.csv`
-- `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_10001_to_20000.csv`
-- `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_20001_to_30000.csv`
-- `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_30001_to_37060.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_1_to_10000.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_10001_to_20000.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_20001_to_30000.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/StJean_Air_Temperature_Stations_Records_30001_to_37060.csv`
 - **Description**: températures de l'air journalières de plusieurs stations climatologiques à proximité de la rivière St. Jean.
 - **Source** : ClimateData.ca (https://climatedata.ca/)
 - **Publication** : non publié (téléchargeable à la source)
@@ -132,10 +156,10 @@ Attention : selon la colonne, `year` correspond soit à l'année d'entrée en me
 #### Stations météorologiques — Trinité
 
 - **Fichier(s)** :
-- `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_1_to_10000.csv`
-- `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_10001_to_20000.csv`
-- `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_20001_to_30000.csv`
-- `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_30001_to_31306.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_1_to_10000.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_10001_to_20000.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_20001_to_30000.csv`
+  - `R/00_raw_data/Air_Temperature_Stations/Trinite_Air_Temperature_Stations_Records_30001_to_31306.csv`
 - **Description**: températures de l'air journalières de plusieurs stations climatologiques à proximité de la rivière Trinité.
 - **Source** : ClimateData.ca (https://climatedata.ca/)
 - **Publication** : non publié (téléchargeable à la source).
@@ -151,8 +175,8 @@ Attention : selon la colonne, `year` correspond soit à l'année d'entrée en me
 #### Rasters de température de l'air (ERA5) — Trinité
 
 - **Fichier(s)** :
-- `R/00_raw_data/Air_Temperature_Raster/tr_1975_2008.zip`
-- `R/00_raw_data/Air_Temperature_Raster/tr_2009_2025.zip`
+  - `R/00_raw_data/Air_Temperature_Raster/tr_1975_2008.zip`
+  - `R/00_raw_data/Air_Temperature_Raster/tr_2009_2025.zip`
 - **Description**: rasters horaires de température de l'air (réanalyse ERA5, format GRIB compressé en ZIP) dans et autour du bassin versant de la rivière Trinité (0.25° grid, 3 x 4 cells; extent: -68.19 to -67.19 °E, 49.20 to 49.95 °N), du 1975-01-01 au 2025-04-30.
 - **Source** : Copernicus Climate Data Store, ERA5 hourly data on single levels (https://cds.climate.copernicus.eu/ ; DOI : 10.24381/cds.adbb2d47)
 - **Publication** : non publié (téléchargeable à la source).
@@ -272,25 +296,25 @@ Valeurs ou données utilisées par plusieurs scripts pour la conception des vari
 
 - **Description**: détermine, pour chaque rivière et chaque année, la période de croissance, soit la période durant laquelle la température de l'eau prédite par un GAM dépasse 6 °C. Le GAM cyclique (`bs = "cc"`, `k = 30`, REML) est ajusté année par année ; la période va du premier franchissement à la hausse au dernier franchissement à la baisse du seuil de 6 °C par la courbe prédite.
 - **Entrées** :
-   - St. Jean: `R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024_SJ.csv`
-   - Trinité: `R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024_TR.csv`
+  - St. Jean: `R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024_SJ.csv`
+  - Trinité: `R/00_raw_data/Temperature_Discharge_River/CEQEAU_Temperature_Discharge_1979_2024_TR.csv`
 - **Sorties** :
-   - St. Jean: `R/01_derived_data/Growth_Periods_StJean.fst` — Non publié (régénéré par ce script)
-   - Trinité: `R/01_derived_data/Growth_Periods_Trinite.fst` — Non publié (régénéré par ce script)
+  - St. Jean: `R/01_derived_data/Growth_Periods_StJean.fst` — Non publié (régénéré par ce script)
+  - Trinité: `R/01_derived_data/Growth_Periods_Trinite.fst` — Non publié (régénéré par ce script)
 
 #### `Smoltification_Date_Determination.R`
 
 - **Description** : pour chaque année, calcule la médiane, l'écart-type et les quantiles 5, 25, 75 et 95 % du jour de capture des smolts (pondérés par le nombre de captures). Les années sans données sont imputées en regroupant les captures des années comprises dans une fenêtre de ±5 ans. 
 - **Entrées** :
-   - St. Jean : `R/00_raw_data/salmon/Smolt_Daily_Captures_StJean.csv`
-   - Trinité : `R/00_raw_data/salmon/Smolt_Daily_Captures_Trinite.csv`
+  - St. Jean : `R/00_raw_data/salmon/Smolt_Daily_Captures_StJean.csv`
+  - Trinité : `R/00_raw_data/salmon/Smolt_Daily_Captures_Trinite.csv`
 - **Sorties** :
-   - St. Jean : `R/01_derived_data/Year_Median_Date_StJean.fst` — Publié
-   - Trinité : `R/01_derived_data/Year_Median_Date_Trinite.fst` — Publié
+  - St. Jean : `R/01_derived_data/Year_Median_Date_StJean.fst` — Publié
+  - Trinité : `R/01_derived_data/Year_Median_Date_Trinite.fst` — Publié
 
-### 2.3 Variables d'eau douce
+### 2.2 Variables d'eau douce
 
-#### 2.3.1 Débit
+#### 2.2.1 Débit
 
 Dossier : `R/02_prepare_data/RIVER_Discharge/`
 
@@ -320,7 +344,7 @@ Dossier : `R/02_prepare_data/RIVER_Discharge/`
   | `em_quant_75qt_disc` | Émergence | 75e centile du débit journalier |
 
 
-#### 2.3.2 Activité forestière
+#### 2.2.2 Activité forestière
 
 Dossier : `R/02_prepare_data/RIVER_Forest_Activities/`
 
@@ -377,7 +401,7 @@ Dossier : `R/02_prepare_data/RIVER_Forest_Activities/`
   |---|---|---|
   | `co_mean_forest` | Années en rivière de la cohorte (pondérée par cohorte) | Moyenne de la superficie annuelle des perturbations forestières (km²), pondérée par les proportions de smolts par classe d'âge |
 
-#### 2.3.3 Température
+#### 2.2.3 Température
 
 Dossier : `R/02_prepare_data/RIVER_Temperature/`
 
@@ -412,7 +436,7 @@ Dossier : `R/02_prepare_data/RIVER_Temperature/`
   | `em_sum_inv_pgti` | Émergence | Somme de 1 − PGTI |
 
 
-#### 2.3.4 Température hivernale (degrés-jours de gel)
+#### 2.2.4 Température hivernale (degrés-jours de gel)
 
 Dossier : `R/02_prepare_data/RIVER_Freezing_Degree_Day/`
 
@@ -484,9 +508,9 @@ Dossier : `R/02_prepare_data/RIVER_Freezing_Degree_Day/`
 
 
 
-### 2.4 Variables marines
+### 2.3 Variables marines
 
-#### 2.4.x Conditions thermiques
+#### 2.3.1 Conditions thermiques
 
 Dossier : `R/02_prepare_data/SEA_SST/`
 
@@ -584,7 +608,7 @@ Les sept scripts de ce dossier s'exécutent dans l'ordre. Les scripts 01 à 04 d
   | `LabradorSea_TH` | Entrée dans la mer du Labrador → 1er mai de t + 1 (fichiers 1SW) ou de t + 2 (fichiers 2SW) | Indice d'habitat thermique cumulé dans la mer du Labrador (paramètres 1SW, puis 2SW après le 1er mai de t + 1 pour les fichiers 2SW) |
   
 
-#### 2.4.x Disponibilité alimentaire
+#### 2.3.2 Disponibilité alimentaire
 
 Dossier : `R/02_prepare_data/SEA_Food_Availability/`
 
@@ -614,7 +638,7 @@ Dossier : `R/02_prepare_data/SEA_Food_Availability/`
   | `Plankton_t` | Année t (1SW et 2SW) | Indice annuel de biomasse de zooplancton dans la mer du Labrador (somme des 12 valeurs mensuelles prédites, médiane des 100 points) |
   | `Plankton_tp1` | Année t + 1 (2SW seulement) | Même indice, pour l'année suivante |
 
-#### 2.4.x Différence de température entre la mer et la rivière à l'entrée en mer
+#### 2.3.3 Différence de température entre la mer et la rivière à l'entrée en mer
 
 Dossier : `R/02_prepare_data/SEA_Temperature_River_VS_Sea/`
 
@@ -644,7 +668,7 @@ Dossier : `R/02_prepare_data/SEA_Temperature_River_VS_Sea/`
   | `n_days_window`, `n_days_valid` | — | Nombre de jours dans la période et nombre de jours utilisés pour la température de la mer |
 
 
-#### 2.4.x Taux d'exploitation en mer
+#### 2.3.4 Taux d'exploitation en mer
 
 Dossier : `R/02_prepare_data/SEA_Exploitation/`
 
@@ -665,7 +689,7 @@ Dossier : `R/02_prepare_data/SEA_Exploitation/`
   | `er_WG_lag1` | Année t + 1 | Taux d'exploitation au Groenland (captures de saumons nord-américains / PFA des 1SW non matures) |
   | `er2NAC_lag2` | Année t + 2 | Taux d'exploitation des 2SW nord-américains (Imlay et al., 2024) |
 
-#### 2.4.x Abondance avant la pêche (densité en mer)
+#### 2.3.5 Abondance avant la pêche (densité en mer)
 
 Dossier : `R/02_prepare_data/SEA_Density_Lab/`
 
@@ -711,7 +735,7 @@ Dossier : `R/04_analysis/River/`
 - **Colonnes** :
   - `river`, `cohort` (année de ponte)
   - `surv_egg_smolt` : survie de l'œuf au smolt (%), variable réponse
-  - Covariables de température de l'eau, de débit, de degrés-jours de gel et d'activité forestière (voir les tableaux des sections 2.3.1 à 2.3.4)
+  - Covariables de température de l'eau, de débit, de degrés-jours de gel et d'activité forestière (voir les tableaux des sections 2.2.1 à 2.2.4)
 
   Les noms des covariables suivent ces conventions :
 
@@ -728,44 +752,6 @@ Dossier : `R/04_analysis/River/`
   | `fdd_bimon` | Degrés-jours de gel sur deux mois (température de l'air) |
   | `oc`, `no`, `de`, `ja`, `fe`, `ma`, `ap` | Octobre à avril |
 
-### 3.2 Retour de la mer
-
-Dossier : `R/04_analysis/Sea/`
-
-#### `01_Combine_Covariates_Sea.R`
-
-- **Description** : assemble les quatre jeux de données des modèles de retour de la mer (St. Jean et Trinité, 1SW et 2SW), avec une ligne par cohorte (année d'entrée en mer). Pour chaque combinaison rivière × âge de mer, la variable réponse (taux de retour) est jointe par cohorte aux covariables marines : écart de température entre la mer et la rivière à l'entrée en mer, disponibilité alimentaire (plancton de la mer du Labrador, année t), indices d'habitat thermique, coefficient de condition des smolts, abondance avant la pêche et taux d'exploitation. Pour les 1SW, seul le taux d'exploitation `er1NAC_lag1` est conservé. Pour les 2SW, `er_WG_lag1` et `er2NAC_lag2` sont combinés en un seul indice d'exploitation (`er_index`), parce qu'ils mesurent le même phénomène dans deux zones liées et qu'ils sont colinéaires.
-- **Entrées** :
-  - `R/00_raw_data/salmon/Salmon_Monitoring_StJean_Trinite_2024.csv` (colonnes `return_1sw_pct`, `return_2sw_pct` et `smolt_k`)
-  - `R/03_clean_data/Sea/DeltaT_SST_River_{stj,tri}_{1SW,2SW}.fst`
-  - `R/03_clean_data/Sea/Plankton_LabradorSea_{stj,tri}_{1SW,2SW}.fst`
-  - `R/03_clean_data/Sea/TH_annual_{stj,tri}_{1sw,2sw}.fst`
-  - `R/03_clean_data/Sea/ExploitationRate_Sea.fst`
-  - `R/03_clean_data/Sea/Density_Lab.fst`
-- **Sorties** :
-  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_1sw_stj.fst` — Publié
-  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_2sw_stj.fst` — Publié
-  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_1sw_tri.fst` — Publié
-  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_2sw_tri.fst` — Publié
-- **Colonnes** :
-
-  | Colonne | Fichiers | Description |
-  |---|---|---|
-  | `river`, `cohort` | Tous | Rivière et année d'entrée en mer |
-  | `return_1sw` / `return_2sw` | 1SW / 2SW | Taux de retour des smolts à l'âge adulte (%), variable réponse |
-  | `delta_T_sst_minus_river` | Tous | Écart de température entre la mer et la rivière à l'entrée en mer |
-  | `Plankton_t` | Tous | Indice de biomasse de zooplancton dans la mer du Labrador, année t |
-  | `StJeanCorridor_TH` / `TriniteCorridor_TH`, `BelleIsle_TH`, `LabradorEntrance_TH`, `LabradorSea_TH` | Tous | Indices d'habitat thermique par polygone |
-  | `smolt_k` | Tous | Coefficient de condition de Fulton moyen des smolts |
-  | `pfa_1sw` / `pfa_2sw` | 1SW / 2SW | Abondance avant la pêche (milliers de poissons) ; retirée à l'étape de sélection des variables (VIF trop élevé) |
-  | `er1NAC_lag1` | 1SW | Taux d'exploitation des 1SW nord-américains, année t + 1 |
-  | `er_index` | 2SW | Indice d'exploitation des 2SW (voir ci-dessous) |
-
-- **Variables créées** :
-
-  | Variable | Période | Description |
-  |---|---|---|
-  | `er_index` | Années t + 1 et t + 2 | Score sur le premier axe d'une ACP (variables centrées-réduites) sur le log de `er_WG_lag1` et le log de `er2NAC_lag2`, calculé séparément pour chaque rivière. Le signe est orienté pour qu'une valeur élevée corresponde à une pression de pêche élevée. Le script vérifie la corrélation entre les deux taux (critère : r ≥ 0,70), la variance expliquée par le premier axe (cible : ≥ 70 %) et le signe des contributions des deux variables. |
 
 #### `02_Variables_Selection_Exploration.R` (rivière)
 
@@ -811,6 +797,69 @@ Dossier : `R/04_analysis/Sea/`
 
   Les données de débit à l'émergence ne sont pas disponibles pour la Trinité.
 
+#### `03_River_Modeling.R`
+
+- **Description** : modélise la survie de l'œuf au smolt par régression bêta (lien logit) pour chaque rivière, à partir des covariables retenues par `02_Variables_Selection_Exploration.R`.
+  1. Centrage-réduction des covariables. `cohort` reste en années ; les paramètres de mise à l'échelle sont conservés pour exprimer les figures en unités d'origine.
+  2. Vérification de la linéarité des relations dans un GAM bêta avec lissages (`mgcv`) : un edf ≈ 1 indique une relation linéaire.
+  3. Ajustement du modèle global, puis sélection de modèles par AICc (`MuMIn::dredge`) et moyenne des modèles du top set (ΔAICc < 2), en moyenne complète et en moyenne conditionnelle. 
+  4. Pour chaque modèle du top set :
+     - pseudo-R² ;
+     - validation croisée leave-one-out (LOO-CV), qui compare l'erreur et le R² hors échantillon à leurs valeurs dans l'échantillon pour détecter le surajustement.
+  5. Effets marginaux moyennés de chaque variable présente dans le top set :
+     - la variable focale varie sur sa plage observée, les autres covariables sont fixées à leur moyenne ;
+     - les prédictions de tous les modèles du top set sont pondérées par leurs poids AICc ;
+     - les intervalles de confiance sont obtenus par bootstrap percentile, parce que `predict.betareg()` ne fournit pas d'erreur standard.
+- **Entrées** :
+  - `R/04_analysis/River/Final_Data/Final_DataSet_STJ.fst`
+  - `R/04_analysis/River/Final_Data/Final_DataSet_TRI.fst`
+
+#### `04_Creating_Models_Final_Figures_River.R`
+
+- **Description** : produit la figure des effets marginaux moyennés de l'article pour la survie de l'œuf au smolt. Le script réajuste le modèle global final de la St. Jean (mêmes covariables que `03_River_Modeling.R`), refait la sélection de modèles par AICc et la moyenne des modèles du top set (ΔAICc < 2), puis calcule les effets marginaux moyennés avec intervalles de confiance bootstrap à 95 %. La Trinité n'a pas de figure : le modèle nul fait partie de son top set et aucune covariable n'est significative dans la moyenne des modèles.
+- **Entrées** :
+  - `R/04_analysis/River/Final_Data/Final_DataSet_STJ.fst`
+- **Sorties** :
+  - `R/04_analysis/River/Combined_MarginalEffects_River.png` — Publié
+
+### 3.2 Retour de la mer
+
+Dossier : `R/04_analysis/Sea/`
+
+#### `01_Combine_Covariates_Sea.R`
+
+- **Description** : assemble les quatre jeux de données des modèles de retour de la mer (St. Jean et Trinité, 1SW et 2SW), avec une ligne par cohorte (année d'entrée en mer). Pour chaque combinaison rivière × âge de mer, la variable réponse (taux de retour) est jointe par cohorte aux covariables marines : écart de température entre la mer et la rivière à l'entrée en mer, disponibilité alimentaire (plancton de la mer du Labrador, année t), indices d'habitat thermique, coefficient de condition des smolts, abondance avant la pêche et taux d'exploitation. Pour les 1SW, seul le taux d'exploitation `er1NAC_lag1` est conservé. Pour les 2SW, `er_WG_lag1` et `er2NAC_lag2` sont combinés en un seul indice d'exploitation (`er_index`), parce qu'ils mesurent le même phénomène dans deux zones liées et qu'ils sont colinéaires.
+- **Entrées** :
+  - `R/00_raw_data/salmon/Salmon_Monitoring_StJean_Trinite_2024.csv` (colonnes `return_1sw_pct`, `return_2sw_pct` et `smolt_k`)
+  - `R/03_clean_data/Sea/DeltaT_SST_River_{stj,tri}_{1SW,2SW}.fst`
+  - `R/03_clean_data/Sea/Plankton_LabradorSea_{stj,tri}_{1SW,2SW}.fst`
+  - `R/03_clean_data/Sea/TH_annual_{stj,tri}_{1sw,2sw}.fst`
+  - `R/03_clean_data/Sea/ExploitationRate_Sea.fst`
+  - `R/03_clean_data/Sea/Density_Lab.fst`
+- **Sorties** :
+  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_1sw_stj.fst` — Publié
+  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_2sw_stj.fst` — Publié
+  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_1sw_tri.fst` — Publié
+  - `R/04_analysis/Sea/Final_Data/PreSelection_DataSet_2sw_tri.fst` — Publié
+- **Colonnes** :
+
+  | Colonne | Fichiers | Description |
+  |---|---|---|
+  | `river`, `cohort` | Tous | Rivière et année d'entrée en mer |
+  | `return_1sw` / `return_2sw` | 1SW / 2SW | Taux de retour des smolts à l'âge adulte (%), variable réponse |
+  | `delta_T_sst_minus_river` | Tous | Écart de température entre la mer et la rivière à l'entrée en mer |
+  | `Plankton_t` | Tous | Indice de biomasse de zooplancton dans la mer du Labrador, année t |
+  | `StJeanCorridor_TH` / `TriniteCorridor_TH`, `BelleIsle_TH`, `LabradorEntrance_TH`, `LabradorSea_TH` | Tous | Indices d'habitat thermique par polygone |
+  | `smolt_k` | Tous | Coefficient de condition de Fulton moyen des smolts |
+  | `pfa_1sw` / `pfa_2sw` | 1SW / 2SW | Abondance avant la pêche (milliers de poissons) ; retirée à l'étape de sélection des variables (VIF trop élevé) |
+  | `er1NAC_lag1` | 1SW | Taux d'exploitation des 1SW nord-américains, année t + 1 |
+  | `er_index` | 2SW | Indice d'exploitation des 2SW (voir ci-dessous) |
+
+- **Variables créées** :
+
+  | Variable | Période | Description |
+  |---|---|---|
+  | `er_index` | Années t + 1 et t + 2 | Score sur le premier axe d'une ACP (variables centrées-réduites) sur le log de `er_WG_lag1` et le log de `er2NAC_lag2`, calculé séparément pour chaque rivière. Le signe est orienté pour qu'une valeur élevée corresponde à une pression de pêche élevée. Le script vérifie la corrélation entre les deux taux (critère : r ≥ 0,70), la variance expliquée par le premier axe (cible : ≥ 70 %) et le signe des contributions des deux variables. |
 
 #### `02_Variables_Selection_Exploration.R` (mer)
 
@@ -853,24 +902,6 @@ Dossier : `R/04_analysis/Sea/`
   | `er1NAC_lag1` | ✓ | ✓ | | |
   | `er_index` | | | ✓ | |
 
-
-#### `03_River_Modeling.R`
-
-- **Description** : modélise la survie de l'œuf au smolt par régression bêta (lien logit) pour chaque rivière, à partir des covariables retenues par `02_Variables_Selection_Exploration.R`.
-  1. Centrage-réduction des covariables. `cohort` reste en années ; les paramètres de mise à l'échelle sont conservés pour exprimer les figures en unités d'origine.
-  2. Vérification de la linéarité des relations dans un GAM bêta avec lissages (`mgcv`) : un edf ≈ 1 indique une relation linéaire.
-  3. Ajustement du modèle global, puis sélection de modèles par AICc (`MuMIn::dredge`) et moyenne des modèles du top set (ΔAICc < 2), en moyenne complète et en moyenne conditionnelle. 
-  4. Pour chaque modèle du top set :
-     - pseudo-R² ;
-     - validation croisée leave-one-out (LOO-CV), qui compare l'erreur et le R² hors échantillon à leurs valeurs dans l'échantillon pour détecter le surajustement.
-  5. Effets marginaux moyennés de chaque variable présente dans le top set :
-     - la variable focale varie sur sa plage observée, les autres covariables sont fixées à leur moyenne ;
-     - les prédictions de tous les modèles du top set sont pondérées par leurs poids AICc ;
-     - les intervalles de confiance sont obtenus par bootstrap percentile, parce que `predict.betareg()` ne fournit pas d'erreur standard.
-- **Entrées** :
-  - `R/04_analysis/River/Final_Data/Final_DataSet_STJ.fst`
-  - `R/04_analysis/River/Final_Data/Final_DataSet_TRI.fst`
-
 #### `03_Sea_Modeling.R`
 
 - **Description** : modélise les taux de retour des smolts à l'âge adulte, après un hiver en mer (1SW) et après deux hivers (2SW), par régression bêta (lien logit) pour chaque rivière. Les modèles utilisent les covariables retenues par `02_Variables_Selection_Exploration.R` (mer). Pour chacune des quatre combinaisons rivière × âge de mer :
@@ -889,14 +920,6 @@ Dossier : `R/04_analysis/Sea/`
   - `R/04_analysis/Sea/Final_Data/Final_DataSet_STJ_2SW.fst`
   - `R/04_analysis/Sea/Final_Data/Final_DataSet_TRI_1SW.fst`
   - `R/04_analysis/Sea/Final_Data/Final_DataSet_TRI_2SW.fst`
-
-#### `04_Creating_Models_Final_Figures_River.R`
-
-- **Description** : produit la figure des effets marginaux moyennés de l'article pour la survie de l'œuf au smolt. Le script réajuste le modèle global final de la St. Jean (mêmes covariables que `03_River_Modeling.R`), refait la sélection de modèles par AICc et la moyenne des modèles du top set (ΔAICc < 2), puis calcule les effets marginaux moyennés avec intervalles de confiance bootstrap à 95 %. La Trinité n'a pas de figure : le modèle nul fait partie de son top set et aucune covariable n'est significative dans la moyenne des modèles.
-- **Entrées** :
-  - `R/04_analysis/River/Final_Data/Final_DataSet_STJ.fst`
-- **Sorties** :
-  - `R/04_analysis/River/Combined_MarginalEffects_River.png` — Publié
 
 #### `04_Creating_Models_Final_Figures_Sea.R`
 
