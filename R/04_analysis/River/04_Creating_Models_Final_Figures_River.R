@@ -30,7 +30,24 @@ library(here)
 # |      PATHS      |
 # |=================|
 
-base_path   <- here::here()
+# Sets the working directory to the repository root (the folder containing the
+# .Rproj file), whatever the folder is named. 
+find_repo_root <- function() {
+  start <- tryCatch(dirname(rstudioapi::getSourceEditorContext()$path),
+                    error = function(e) "")
+  if (!nzchar(start)) {
+    f <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE))
+    start <- if (length(f)) dirname(normalizePath(f)) else getwd()
+  }
+  d <- normalizePath(start, winslash = "/")
+  while (length(list.files(d, pattern = "\\.Rproj$")) == 0) {
+    if (dirname(d) == d) stop("Repository root not found (no .Rproj file above this script).")
+    d <- dirname(d)
+  }
+  d
+}
+setwd(find_repo_root())
+
 output_path <- file.path(base_path, "R/04_analysis/River")
 
 

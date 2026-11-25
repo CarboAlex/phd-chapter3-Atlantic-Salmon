@@ -49,15 +49,23 @@ library(rnaturalearthdata)
 # WORKING DIRECTORY
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ── Working directory ─────────────────────────────────────────────────────────
-# Automatically detects the repository root based on the script location.
-# No hardcoded path — works on any machine.
-current_file <- rstudioapi::getActiveDocumentContext()$path
-path_parts   <- unlist(strsplit(normalizePath(current_file, winslash = "/"), "/"))
-target_index <- which(path_parts == "phd-chapter3-Atlantic-Salmon")
-base_path    <- paste(path_parts[1:target_index], collapse = "/")
-setwd(base_path)
-
+# Sets the working directory to the repository root (the folder containing the
+# .Rproj file), whatever the folder is named. 
+find_repo_root <- function() {
+  start <- tryCatch(dirname(rstudioapi::getSourceEditorContext()$path),
+                    error = function(e) "")
+  if (!nzchar(start)) {
+    f <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE))
+    start <- if (length(f)) dirname(normalizePath(f)) else getwd()
+  }
+  d <- normalizePath(start, winslash = "/")
+  while (length(list.files(d, pattern = "\\.Rproj$")) == 0) {
+    if (dirname(d) == d) stop("Repository root not found (no .Rproj file above this script).")
+    d <- dirname(d)
+  }
+  d
+}
+setwd(find_repo_root())
 
 
 
